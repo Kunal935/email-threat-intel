@@ -16,7 +16,7 @@ import {
   Zap
 } from 'lucide-react';
 
-const API_URL = "/api";
+const API_URL = "https://email-threat-intel-6o1u.onrender.com/predict";
 
 const App = () => {
   const [message, setMessage] = useState('');
