@@ -1,6 +1,8 @@
 # Smart Spam Detection Engine
 AI-Powered Threat Intelligence & Email Filtering System.
 
+- direct link :- https://email-threat-intel-iyprckadw-kunal935s-projects.vercel.app/
+
 ## Project Structure
 - **Backend (FastAPI)**: `api.py`
 - **Frontend (React/Vite)**: `frontend/`
@@ -51,3 +53,4 @@ The system uses a combination of:
     - Capitalization Ratios
     - Text Entropy (Complexity measurement)
 - **Logistic Regression Model**: Optimized for high recall on threat detection.
+
