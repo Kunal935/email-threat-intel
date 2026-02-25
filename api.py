@@ -11,6 +11,7 @@ import joblib
 import pandas as pd
 from pathlib import Path
 import nltk
+from fastapi import FastAPI
 
 # Download required NLTK resources
 nltk.download('stopwords')
@@ -131,9 +132,24 @@ def health():
     return {"status": "ok", "model": "LogisticRegression", "version": "1.0.0"}
 
 
+
+
+
+app = FastAPI()
+
+# routes
+@app.get("/health")
+def health():
+    return {"status":"ok"}
+
+@app.post("/predict")
+def predict(...):
+    ...
+
 # ═══════════════════════════════════════════════
 #  Run with: python api.py
 # ═══════════════════════════════════════════════
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
+
