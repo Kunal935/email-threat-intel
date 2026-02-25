@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield,
@@ -16,7 +16,7 @@ import {
   Zap
 } from 'lucide-react';
 
-const API_URL = "https://email-threat-intel-6o1u.onrender.com/predict";
+const API_URL = "https://email-threat-intel-6o1u.onrender.com";
 
 const App = () => {
   const [message, setMessage] = useState('');
@@ -24,6 +24,25 @@ const App = () => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
+
+  // Backend test call on mount
+  useEffect(() => {
+    async function testPredict() {
+      try {
+        const response = await fetch(`${API_URL}/predict`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: "Ye test spam hai?" }),
+        });
+        const data = await response.json();
+        console.log("Test prediction:", data);
+      } catch (err) {
+        console.error("Error calling API:", err);
+      }
+    }
+
+    testPredict();
+  }, []);
 
   const handleAnalyze = async () => {
     if (!message.trim()) return;
@@ -87,9 +106,7 @@ const App = () => {
       />
 
       <main className="relative z-10 container mx-auto px-4 py-12 max-w-4xl">
-        {/* ════════════════════════════════════════
-            HEADER SECTION
-           ════════════════════════════════════════ */}
+        {/* HEADER SECTION */}
         <header className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -115,9 +132,7 @@ const App = () => {
           </motion.div>
         </header>
 
-        {/* ════════════════════════════════════════
-            INPUT SECTION
-           ════════════════════════════════════════ */}
+        {/* INPUT SECTION */}
         <div className="mb-12">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -181,17 +196,15 @@ const App = () => {
                 )}
               </button>
             </div>
-          </motion.div>
 
-          {/* Keyboard hint */}
-          <p className="text-center mt-3 text-xs font-mono" style={{ color: 'rgba(0,242,255,0.25)' }}>
-            Press Ctrl + Enter to analyze
-          </p>
+            {/* Keyboard hint */}
+            <p className="text-center mt-3 text-xs font-mono" style={{ color: 'rgba(0,242,255,0.25)' }}>
+              Press Ctrl + Enter to analyze
+            </p>
+          </motion.div>
         </div>
 
-        {/* ════════════════════════════════════════
-            ERROR DISPLAY
-           ════════════════════════════════════════ */}
+        {/* ERROR DISPLAY */}
         <AnimatePresence>
           {error && (
             <motion.div
@@ -216,9 +229,7 @@ const App = () => {
           )}
         </AnimatePresence>
 
-        {/* ════════════════════════════════════════
-            OUTPUT / RESULT SECTION
-           ════════════════════════════════════════ */}
+        {/* OUTPUT / RESULT SECTION */}
         <AnimatePresence mode="wait">
           {result && (
             <motion.div
@@ -288,9 +299,7 @@ const App = () => {
                 </div>
               </div>
 
-              {/* ════════════════════════════════════════
-                  ADVANCED SECTION (Collapsible)
-                 ════════════════════════════════════════ */}
+              {/* ADVANCED SECTION */}
               <div className="cyber-panel rounded-2xl overflow-hidden">
                 <button
                   onClick={() => setShowAdvanced(!showAdvanced)}
@@ -335,9 +344,7 @@ const App = () => {
           )}
         </AnimatePresence>
 
-        {/* ════════════════════════════════════════
-            FOOTER
-           ════════════════════════════════════════ */}
+        {/* FOOTER */}
         <footer className="mt-24 pt-12 text-center"
           style={{ borderTop: '1px solid rgba(0,242,255,0.1)' }}
         >
@@ -360,10 +367,7 @@ const App = () => {
   );
 };
 
-
-/* ════════════════════════════════════════════════
-   Signal Bar Sub-Component
-   ════════════════════════════════════════════════ */
+/* Signal Bar Sub-Component */
 const SignalBar = ({ label, value, color, max = 100 }) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
     <div className="flex justify-between text-xs font-mono tracking-widest uppercase">
@@ -383,6 +387,5 @@ const SignalBar = ({ label, value, color, max = 100 }) => (
     </div>
   </div>
 );
-
 
 export default App;
