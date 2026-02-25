@@ -16,7 +16,7 @@ import {
   Zap
 } from 'lucide-react';
 
-const API_URL = "https://email-threat-intel.vercel.app";
+const API_URL = "/api";
 
 const App = () => {
   const [message, setMessage] = useState('');
